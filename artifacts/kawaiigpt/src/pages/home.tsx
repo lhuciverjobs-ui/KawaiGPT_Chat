@@ -162,7 +162,7 @@ export default function Home() {
         if (done) break;
         
         buffer += decoder.decode(value, { stream: true });
-        const parts = buffer.split("\\n\\n");
+        const parts = buffer.split("\n\n");
         buffer = parts.pop() ?? "";
         
         for (const part of parts) {

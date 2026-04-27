@@ -3,13 +3,19 @@ info:
   # Do not change the title, if the title changes, the import paths will be broken
   title: Api
   version: 0.1.0
-  description: API specification
+  description: KawaiiGPT API specification
 servers:
   - url: /api
     description: Base API path
 tags:
   - name: health
     description: Health operations
+  - name: chat
+    description: Chat with KawaiiGPT
+  - name: image
+    description: Image generation
+  - name: models
+    description: Available models and presets
 paths:
   /healthz:
     get:
@@ -24,6 +30,55 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+  /models:
+    get:
+      operationId: listModels
+      tags: [models]
+      summary: List available chat models, image models, and personas
+      responses:
+        "200":
+          description: Available presets
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ModelPresets"
+  /chat/messages:
+    post:
+      operationId: sendChatMessage
+      tags: [chat]
+      summary: Stream a kawaii chat reply (SSE)
+      description: Server-Sent Events stream of assistant reply tokens
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ChatRequest"
+      responses:
+        "200":
+          description: SSE stream of reply chunks
+          content:
+            text/event-stream:
+              schema:
+                type: string
+  /image/generate:
+    post:
+      operationId: generateImage
+      tags: [image]
+      summary: Generate an image with KawaiiGPT
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ImageRequest"
+      responses:
+        "200":
+          description: Generated image
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GeneratedImage"
 components:
   schemas:
     HealthStatus:
@@ -33,4 +88,112 @@ components:
           type: string
       required:
         - status
-
+    ChatModel:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Internal model identifier
+        label:
+          type: string
+          description: Pretty display name
+        tagline:
+          type: string
+          description: One-liner describing the model's vibe
+        premium:
+          type: boolean
+        emoji:
+          type: string
+      required: [id, label, tagline, premium, emoji]
+    ImageModel:
+      type: object
+      properties:
+        id:
+          type: string
+        label:
+          type: string
+        tagline:
+          type: string
+        premium:
+          type: boolean
+        emoji:
+          type: string
+      required: [id, label, tagline, premium, emoji]
+    Persona:
+      type: object
+      properties:
+        id:
+          type: string
+        label:
+          type: string
+        description:
+          type: string
+        emoji:
+          type: string
+      required: [id, label, description, emoji]
+    ModelPresets:
+      type: object
+      properties:
+        chatModels:
+          type: array
+          items:
+            $ref: "#/components/schemas/ChatModel"
+        imageModels:
+          type: array
+          items:
+            $ref: "#/components/schemas/ImageModel"
+        personas:
+          type: array
+          items:
+            $ref: "#/components/schemas/Persona"
+        version:
+          type: string
+      required: [chatModels, imageModels, personas, version]
+    ChatMessageRole:
+      type: string
+      enum: [user, assistant]
+    ChatMessage:
+      type: object
+      properties:
+        role:
+          $ref: "#/components/schemas/ChatMessageRole"
+        content:
+          type: string
+      required: [role, content]
+    ChatRequest:
+      type: object
+      properties:
+        modelId:
+          type: string
+          description: Chat model id from /models
+        personaId:
+          type: string
+          description: Persona id from /models
+        messages:
+          type: array
+          items:
+            $ref: "#/components/schemas/ChatMessage"
+          description: Full chat history (last 50 messages used)
+      required: [modelId, personaId, messages]
+    ImageRequest:
+      type: object
+      properties:
+        modelId:
+          type: string
+        prompt:
+          type: string
+        size:
+          type: string
+          enum: ["1024x1024", "1536x1024", "1024x1536"]
+      required: [modelId, prompt]
+    GeneratedImage:
+      type: object
+      properties:
+        b64Json:
+          type: string
+          description: Base64-encoded PNG image
+        prompt:
+          type: string
+        modelId:
+          type: string
+      required: [b64Json, prompt, modelId]

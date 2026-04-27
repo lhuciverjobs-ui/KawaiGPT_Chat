@@ -1,0 +1,8 @@
+uploads = []
+outputs = []
+
+[[generated]]
+id = "smci7kQsumo6q2lQEyOFy"
+uri = "file://artifacts/kawaiigpt/src/assets/avatar.png"
+type = "image"
+title = "Kawaii anime girl mascot avatar"

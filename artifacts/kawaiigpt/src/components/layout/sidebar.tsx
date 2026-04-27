@@ -146,6 +146,16 @@ export function Sidebar({
           )}
         </div>
       </ScrollArea>
+
+      <div className="px-4 py-3 border-t border-sidebar-border text-xs text-sidebar-foreground/60 leading-relaxed">
+        <div className="flex items-center gap-1.5 mb-1">
+          <SparkleIcon className="w-3 h-3 text-primary/70" />
+          <span className="font-medium text-sidebar-foreground/80">Powered by OpenAI</span>
+        </div>
+        <p>
+          Routed through Replit AI Integrations — no API key needed.
+        </p>
+      </div>
     </div>
   );
 }

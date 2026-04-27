@@ -136,23 +136,32 @@ export function MessageList({ messages, streamingMessage }: MessageListProps) {
         </div>
       ))}
 
-      {streamingMessage && (
+      {streamingMessage !== null && (
         <div className="flex w-full justify-start animate-in slide-in-from-bottom-4 fade-in duration-300">
           <div className="flex max-w-[85%] gap-4 flex-row">
             <Avatar className="w-10 h-10 border-2 border-primary/20 shadow-sm shrink-0">
               <AvatarImage src={KawaiiAvatar} />
               <AvatarFallback>KG</AvatarFallback>
             </Avatar>
-            <div className="relative px-5 py-4 rounded-2xl shadow-sm bg-card border border-border/50 text-card-foreground rounded-tl-sm">
-              <div className="prose prose-sm dark:prose-invert max-w-none">
-                <ReactMarkdown
-                  remarkPlugins={[remarkGfm]}
-                  rehypePlugins={[rehypeHighlight]}
-                >
-                  {streamingMessage}
-                </ReactMarkdown>
-                <span className="inline-block w-1.5 h-4 ml-1 bg-primary animate-pulse align-middle" />
-              </div>
+            <div className="relative px-5 py-4 rounded-2xl shadow-sm bg-card border border-border/50 text-card-foreground rounded-tl-sm min-w-[80px]">
+              {streamingMessage.length === 0 ? (
+                <div className="flex items-center gap-1.5 py-1" aria-label="KawaiiGPT is thinking">
+                  <span className="w-2 h-2 rounded-full bg-primary/70 animate-bounce" style={{ animationDelay: '0ms' }} />
+                  <span className="w-2 h-2 rounded-full bg-primary/70 animate-bounce" style={{ animationDelay: '150ms' }} />
+                  <span className="w-2 h-2 rounded-full bg-primary/70 animate-bounce" style={{ animationDelay: '300ms' }} />
+                  <span className="ml-2 text-xs text-muted-foreground italic">thinking... (´｡• ω •｡`)</span>
+                </div>
+              ) : (
+                <div className="prose prose-sm dark:prose-invert max-w-none">
+                  <ReactMarkdown
+                    remarkPlugins={[remarkGfm]}
+                    rehypePlugins={[rehypeHighlight]}
+                  >
+                    {streamingMessage}
+                  </ReactMarkdown>
+                  <span className="inline-block w-1.5 h-4 ml-1 bg-primary animate-pulse align-middle" />
+                </div>
+              )}
             </div>
           </div>
         </div>

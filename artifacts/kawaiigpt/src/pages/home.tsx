@@ -149,13 +149,6 @@ export default function Home() {
       const decoder = new TextDecoder();
       let buffer = "";
       let assistantContent = "";
-      
-      const assistantMsg = addMessage(convoId, {
-        role: "assistant",
-        content: "",
-        modelId: activeModelId,
-        personaId: activePersonaId,
-      });
 
       while (true) {
         const { done, value } = await reader.read();
@@ -181,12 +174,20 @@ export default function Home() {
             } else if (evt.content) {
               assistantContent += evt.content;
               setStreamingMessage(assistantContent);
-              updateMessage(convoId, assistantMsg.id, evt.content);
             }
           } catch (e) {
             // ignore parse errors for partial chunks
           }
         }
+      }
+
+      if (assistantContent.trim().length > 0) {
+        addMessage(convoId, {
+          role: "assistant",
+          content: assistantContent,
+          modelId: activeModelId,
+          personaId: activePersonaId,
+        });
       }
     } catch (error: any) {
       if (error.name !== "AbortError") {

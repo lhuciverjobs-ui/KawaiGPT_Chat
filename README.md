@@ -31,7 +31,7 @@ Cocok buat belajar integrasi AI, frontend UI, dan eksperimen chatbot.
 ## 🖼️ Preview
 
 <p align="center">
-  <img src="https://i.imgur.com/8Km9tLL.png" width="600"/>
+  <img src="[https://i.imgur.com/8Km9tLL.png](https://b.top4top.io/p_3769vfwm41.png)" width="600"/>
 </p>
 
 ---

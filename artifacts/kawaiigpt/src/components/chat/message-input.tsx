@@ -42,8 +42,8 @@ export function MessageInput({
     }
   };
 
-  const handleInput = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const target = e.target;
+  const handleInput = (e: React.FormEvent<HTMLTextAreaElement>) => {
+    const target = e.currentTarget;
     target.style.height = "auto";
     target.style.height = `${Math.min(target.scrollHeight, 200)}px`;
   };

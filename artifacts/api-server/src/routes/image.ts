@@ -1,6 +1,6 @@
 import { Router, type IRouter, type Request, type Response } from "express";
 import { GenerateImageBody } from "@workspace/api-zod";
-import { openai } from "../lib/openai";
+import { createOpenAIClient } from "../lib/openai";
 import { IMAGE_MODEL_BY_ID } from "../lib/personas";
 
 const router: IRouter = Router();
@@ -25,6 +25,7 @@ router.post(
     }
 
     try {
+      const openai = createOpenAIClient();
       const result = await openai.images.generate({
         model: model.upstreamModel,
         prompt,

@@ -1,6 +1,6 @@
 import { Router, type IRouter, type Request, type Response } from "express";
 import { SendChatMessageBody } from "@workspace/api-zod";
-import { openai } from "../lib/openai";
+import { getOpenRouterHeaders, requireOpenAIConfig } from "../lib/openai";
 import { CHAT_MODEL_BY_ID, PERSONA_BY_ID } from "../lib/personas";
 
 const router: IRouter = Router();
@@ -68,14 +68,14 @@ router.post(
       const isReasoning =
         model.upstreamModel.startsWith("o") ||
         model.upstreamModel.endsWith("-nano");
-      const baseURL = process.env["AI_INTEGRATIONS_OPENAI_BASE_URL"]!.replace(/\/$/, "");
-      const apiKey = process.env["AI_INTEGRATIONS_OPENAI_API_KEY"]!;
-      const upstreamRes = await fetch(`${baseURL}/chat/completions`, {
+      const config = requireOpenAIConfig();
+      const upstreamRes = await fetch(`${config.baseURL.replace(/\/$/, "")}/chat/completions`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Accept: "text/event-stream",
-          Authorization: `Bearer ${apiKey}`,
+          Authorization: `Bearer ${config.apiKey}`,
+          ...getOpenRouterHeaders(config.baseURL),
         },
         body: JSON.stringify({
           model: model.upstreamModel,

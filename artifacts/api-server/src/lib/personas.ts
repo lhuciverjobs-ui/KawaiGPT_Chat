@@ -79,7 +79,7 @@ export const CHAT_MODELS: ChatModel[] = [
     tagline: "The default — fast, friendly, fluent.",
     premium: false,
     emoji: "✿",
-    upstreamModel: "gpt-5.4",
+    upstreamModel: "google/gemini-2.5-flash",
   },
   {
     id: "kawaii-mini",
@@ -87,7 +87,7 @@ export const CHAT_MODELS: ChatModel[] = [
     tagline: "Lightweight & speedy for quick chats.",
     premium: false,
     emoji: "✦",
-    upstreamModel: "gpt-5-mini",
+    upstreamModel: "google/gemini-2.5-flash-lite",
   },
   {
     id: "kawaii-nano",
@@ -95,7 +95,7 @@ export const CHAT_MODELS: ChatModel[] = [
     tagline: "Tiniest, fastest, perfect for snappy replies.",
     premium: false,
     emoji: "·",
-    upstreamModel: "gpt-5-nano",
+    upstreamModel: "google/gemini-2.5-flash-lite",
   },
   {
     id: "kawaii-thinker",
@@ -103,7 +103,7 @@ export const CHAT_MODELS: ChatModel[] = [
     tagline: "Reasoning-heavy. Slower, deeper, smarter.",
     premium: false,
     emoji: "◈",
-    upstreamModel: "o4-mini",
+    upstreamModel: "google/gemini-2.5-pro",
   },
   {
     id: "kawaii-coder",
@@ -111,7 +111,7 @@ export const CHAT_MODELS: ChatModel[] = [
     tagline: "Tuned for code. Deep, precise, complex.",
     premium: false,
     emoji: "⌘",
-    upstreamModel: "gpt-5.4",
+    upstreamModel: "google/gemini-2.5-pro",
   },
 ];
 
@@ -122,7 +122,7 @@ export const IMAGE_MODELS: ImageModel[] = [
     tagline: "Soft pastel illustrations & dreamy scenes.",
     premium: false,
     emoji: "❀",
-    upstreamModel: "gpt-image-1",
+    upstreamModel: "google/gemini-2.5-flash-image",
   },
 ];
 

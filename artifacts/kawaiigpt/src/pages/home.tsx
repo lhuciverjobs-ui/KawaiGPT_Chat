@@ -45,6 +45,7 @@ export default function Home() {
 
   const handleSend = async (content: string) => {
     let convoId = currentId;
+    let convoSnapshot = currentConversation;
     if (!convoId || !currentConversation) {
       if (!preferences.modelId || !preferences.personaId) {
         toast.error("Please select a model and persona first!");
@@ -52,9 +53,10 @@ export default function Home() {
       }
       const newConvo = createConversation(preferences.modelId, preferences.personaId);
       convoId = newConvo.id;
+      convoSnapshot = newConvo;
     }
 
-    const convo = conversations.find(c => c.id === convoId) || currentConversation;
+    const convo = conversations.find(c => c.id === convoId) || convoSnapshot;
     if (!convo) return;
     
     const activeModelId = preferences.modelId || convo.modelId;

@@ -109,7 +109,7 @@ export function Sidebar({
         <div className="space-y-1 pb-4">
           {conversations.length === 0 ? (
             <div className="text-center text-sm text-sidebar-foreground/50 py-8 italic">
-              No chats yet. Start one! 🌸
+              No chats yet. Start one!
             </div>
           ) : (
             conversations.map((c) => (
@@ -153,7 +153,7 @@ export function Sidebar({
           <span className="font-medium text-sidebar-foreground/80">Powered by OpenAI</span>
         </div>
         <p>
-          Routed through Replit AI Integrations — no API key needed.
+          Connect this app to your own OpenAI-compatible provider.
         </p>
       </div>
     </div>
